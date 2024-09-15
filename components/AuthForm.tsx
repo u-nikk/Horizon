@@ -24,6 +24,7 @@ import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react'
 import SignUp from '@/app/(auth)/sign-up/page'
 import { useRouter } from 'next/navigation'
+import { signIn, signUp } from '@/lib/actions/user.action'
 
 
 
@@ -53,27 +54,27 @@ const AuthForm = ({ type }: { type: string }) => {
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         setisLoading(true)
 
-        // try {
-        //     //Sign up with Appwrite & plain link token
+        try {
+            //Sign up with Appwrite & plain link token
 
-        //     if(type === 'sign-up'){
-        //         // const newUser = await signUp(data);
+            // if(type === 'sign-up'){
+            //     const newUser = await signUp(data);
 
-        //         // setuser(newUser);
-        //     }
+            //     setuser(newUser);
+            // }
 
-        //     if(type==='sign-in'){
-        //         const response = await SignIn({
-        //             email:data.email,
-        //             password:data.password,
-        //         })
-        //         if(response) router.push('/')
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // } finally{
-        //     setisLoading(false);
-        // }
+            // if(type==='sign-in'){
+            //     const response = await signIn({
+            //         email:data.email,
+            //         password:data.password,
+            //     })
+            //     if(response) router.push('/')
+            // }
+        } catch (error) {
+            console.log(error);
+        } finally{
+            setisLoading(false);
+        }
         
     }
 
@@ -139,7 +140,7 @@ const AuthForm = ({ type }: { type: string }) => {
                                     <CustomInput control={form.control} name='city' label='City' placeholder='Enter your City' />
                                     <div className='flex gap-4'>
                                         <CustomInput control={form.control} name='state' label='State' placeholder='Enter your state' />
-                                        <CustomInput control={form.control} name='pinCode' label='PIN Code' placeholder='Example 111111' />
+                                        <CustomInput control={form.control} name='postalCode' label='PIN Code' placeholder='Example 111111' />
                                     </div>
                                     <div className='flex gap-4'>
                                         <CustomInput control={form.control} name='dateOfBirth' label='Date of Birth' placeholder='YYYY-MM-DD' />
