@@ -55,7 +55,8 @@ const AuthForm = ({ type }: { type: string }) => {
         setisLoading(true)
 
         try {
-            //Sign up with Appwrite & plain link token
+
+            // Sign up with Appwrite & plain link token
 
             // if(type === 'sign-up'){
             //     const newUser = await signUp(data);
@@ -78,6 +79,12 @@ const AuthForm = ({ type }: { type: string }) => {
         
     }
 
+
+
+    //just to push on github
+
+
+    
     return (
         <section className='auth-form'>
             <header className='flex flex-col gap-5 md:gap-8'>
