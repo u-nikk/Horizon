@@ -3,7 +3,6 @@
 import { ID } from "node-appwrite"
 import { createAdminClient, createSessionClient } from "../appwrite"
 import { parseStringify } from "../utils"
-import { parse } from "path"
 import { cookies } from "next/headers"
 
 export const signIn = async({email,password}:signInProps) => {
