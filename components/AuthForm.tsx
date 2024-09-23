@@ -24,7 +24,7 @@ import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react'
 import SignUp from '@/app/(auth)/sign-up/page'
 import { useRouter } from 'next/navigation'
-import { signIn, signUp } from '@/lib/actions/user.action'
+import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.action'
 
 
 
@@ -32,12 +32,14 @@ const formSchema = z.object({
     email: z.string().email(),
 })
 
-
+ 
 
 const AuthForm = ({ type }: { type: string }) => {
     const router = useRouter();
     const [user, setuser] = useState(null);
     const [isLoading, setisLoading] = useState(false);
+    // const loggedInUser = await getLoggedInUser();
+
 
     const formSchema = authFormSchema(type);
 
@@ -58,33 +60,31 @@ const AuthForm = ({ type }: { type: string }) => {
 
             // Sign up with Appwrite & plain link token
 
-            // if(type === 'sign-up'){
-            //     const newUser = await signUp(data);
+            if (type === 'sign-up') {
+                const newUser = await signUp(data);
 
-            //     setuser(newUser);
-            // }
+                setuser(newUser);
+            }
 
-            // if(type==='sign-in'){
-            //     const response = await signIn({
-            //         email:data.email,
-            //         password:data.password,
-            //     })
-            //     if(response) router.push('/')
-            // }
-        } catch (error) {
-            console.log(error);
-        } finally{
-            setisLoading(false);
-        }
-        
-    }
-
-
-
-    //just to push on github
+            if(type === 'sign-in') {
+                const response = await signIn({
+                  email: data.email,
+                  password: data.password,
+                })
+      
+                if(response) router.push('/')
+              }
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setisLoading(false);
+            }
+          }
 
 
-    
+
+
+
     return (
         <section className='auth-form'>
             <header className='flex flex-col gap-5 md:gap-8'>
@@ -101,24 +101,17 @@ const AuthForm = ({ type }: { type: string }) => {
 
                 <div className='flex flex-com gap-1 md:gap-3'>
                     <h1 className='text-24 lg:text-36 font-semibold text-gray-900'>
-                        {/* {user 
+                    {user 
                 ? 'Link Account'
                 : type === 'sign-in'
                   ? 'Sign In'
                   : 'Sign Up'
-              } */}
-
-                        {user
-                            ? 'Link Account'
-                            : type === 'sign-in'
-                                ? 'Sign In'
-                                : 'Sign Up'
-                        }
-                        <p className='text-16 font-normal text-gray-600'>
-                            {user
-                                ? 'Link your account to get started'
-                                : 'Please enter your details'
-                            }
+              }
+              <p className="text-16 font-normal text-gray-600">
+                {user 
+                  ? 'Link your account to get started'
+                  : 'Please enter your details'
+                }
                         </p>
                     </h1>
 
